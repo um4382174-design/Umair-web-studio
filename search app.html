@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Style Search</title>
+</head>
+<style>
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.search-container {
+    text-align: center;
+}
+
+.logo {
+    font-size: 50px;
+    color: #4285f4;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+}
+
+#search {
+    width: 300px;
+    padding: 12px;
+    border-radius: 25px 0 0 25px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    background: #4285f4;
+    color: white;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+}
+
+#suggestions {
+    margin-top: 10px;
+    background: white;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background: #f1f1f1;
+}
+</style>
+<body>
+    
+    <div class="search-container">
+        
+        <h1 class="logo">MySearch</h1>
+
+        <div class="search-box">
+            
+            <input type="text" id="search" placeholder="Search Google...">
+            
+            <button onclick="searchGoogle()">🔍</button>
+            
+        </div>
+
+        <div id="suggestions"></div>
+        
+    </div>
+
+<script>
+    const searchInput = document.getElementById("search");
+const suggestionsBox = document.getElementById("suggestions");
+
+const suggestions = [
+    "JavaScript tutorial",
+    "HTML CSS projects",
+    "Weather today",
+    "News Pakistan",
+    "Games download",
+    "Learn programming",
+    "C++ projects",
+    "Python scripts",
+    "how to create ai",
+    " Chinese food",
+    "Disaster in pakistan"
+];
+
+searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+    suggestionsBox.innerHTML = "";
+
+    if (value === "") return;
+
+    const filtered = suggestions.filter(item =>
+        item.toLowerCase().includes(value)
+    );
+
+    filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("suggestion-item");
+        div.textContent = item;
+
+        div.onclick = () => {
+            searchInput.value = item;
+            searchGoogle();
+        };
+
+        suggestionsBox.appendChild(div);
+    });
+});
+
+
+function searchGoogle() {
+    const query = searchInput.value;
+    if (query.trim() !== "") {
+        window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
+    }
+}
+
+searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        searchGoogle();
+    }
+});
+</script>
+</body>
+</html>
